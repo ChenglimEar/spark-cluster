@@ -1,11 +1,16 @@
 version: "3.7"
 services:
-  base:
+  notebook:
     image: chenglim/spark-base:latest
     build: .
-    working_dir: /spark/bin
-    entrypoint:
-      - /bin/sh
+    hostname: notebook
+    working_dir: /notebooks
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./resources/notebooks:/notebooks
+      - ./resources/jobs:/jobs
+      - ./tmp:/tmp
   master:
     image: chenglim/spark-base:latest
     hostname: master
@@ -13,8 +18,7 @@ services:
       - "8080:8080"
       - "7077:7077"
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./tmp:/tmp
     environment:
       - "SPARK_LOCAL_IP=master"
     working_dir: /spark/bin
@@ -31,8 +35,7 @@ services:
       - SPARK_DRIVER_MEMORY=128m
       - SPARK_EXECUTOR_MEMORY=256m
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./tmp:/tmp
     working_dir: /spark/bin
     entrypoint:
       - /spark/bin/start-worker.sh
@@ -41,4 +44,7 @@ services:
     depends_on: 
       - worker
     entrypoint:
-      - /spark/bin/submit-job.sh
+      - /jobs/cluster-test/submit.sh
+    volumes:
+      - ./resources/jobs:/jobs
+      - ./tmp:/tmp
