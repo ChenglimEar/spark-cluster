@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  base:
+    image: chenglim/spark-base:latest
+    build: .
+    working_dir: /spark/bin
+    entrypoint:
+      - /bin/sh
+  master:
+    image: chenglim/spark-base:latest
+    hostname: master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+       - ./apps:/opt/spark-apps
+       - ./data:/opt/spark-data
+    environment:
+      - "SPARK_LOCAL_IP=master"
+    working_dir: /spark/bin
+    entrypoint:
+      - /spark/bin/start-master.sh
+  worker:
+    image: chenglim/spark-base:latest
+    depends_on:
+      - master
+    environment:
+      - SPARK_MASTER=spark://master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=128m
+      - SPARK_EXECUTOR_MEMORY=256m
+    volumes:
+       - ./apps:/opt/spark-apps
+       - ./data:/opt/spark-data
+    working_dir: /spark/bin
+    entrypoint:
+      - /spark/bin/start-worker.sh
+  submit-job:
+    image: chenglim/spark-base:latest
+    depends_on: 
+      - worker
+    entrypoint:
+      - /spark/bin/submit-job.sh
