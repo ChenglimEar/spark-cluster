@@ -24,7 +24,7 @@ docker-compose up --scale worker=3
 
 ## STEP 4
 
-Visit [http://localhost:8080] in your web browser to see what the cluster is doing.  You should see a job running.
+Visit [http://localhost:8080](http://localhost:8080) in your web browser to see what the cluster is doing.  You should see a job running.
 A simple spark standalone cluster for your testing environment purposses. A *docker-compose up* away from you solution for your spark development environment.
 
 ## STEP 5
