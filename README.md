@@ -1,6 +1,6 @@
 # Local Spark Cluster
 
-This is a local spark cluster implemented using Docker containers.  To take it for a test ride, simply follow the steps below.
+This is a local spark cluster implemented using Docker containers.  To take it for a test drive, simply follow the steps below.
 
 ## STEP 1
 
