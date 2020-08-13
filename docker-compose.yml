@@ -1,14 +1,15 @@
 version: "3.7"
 services:
-  notebook:
+  jupyter:
     image: chenglim/spark-base:latest
     build: .
-    hostname: notebook
-    working_dir: /notebooks
+    hostname: jupyter
+    environment:
+      JUPYTER_ENABLE_LAB: 'yes'
     ports:
       - "8888:8888"
     volumes:
-      - ./resources/notebooks:/notebooks
+      - ./resources/projects:/home/jovyan
       - ./resources/jobs:/jobs
       - ./tmp:/tmp
   master:

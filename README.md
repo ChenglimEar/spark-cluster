@@ -10,15 +10,15 @@ Clone this repository and make sure you have Docker installed locally.  Then cha
 
 ## STEP 2
 
-Build the spark docker image as follows:
+Build the base docker image as follows:
 
 ```
-docker-compose build notebook
+docker-compose build jupyter
 ```
 
 ## STEP 3
 
-Start all the local spark cluster with Jupyter server.  You should see logging for all the Docker services that are started, including a service that submits a test job.
+Start the local spark cluster with Jupyter server.  You should see logging for all the Docker services that are started, including a service that submits a test job.
 
 ```
 docker-compose up
@@ -26,7 +26,7 @@ docker-compose up
 
 ## STEP 4
 
-Log into the Jupyter server by looking for the URL in the logs.
+Log into the Jupyter server by going to [http://127.0.0.1:8888?token=localuseronly](http://127.0.0.1:8888?token=localuseronly).
 
 ## STEP 5
 
